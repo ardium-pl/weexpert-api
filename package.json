@@ -1,0 +1,13 @@
+{
+    "name": "weexpert-api",
+    "version": "0.0.0",
+    "description": "",
+    "author": "",
+    "scripts": {
+        "start": "node server/src/index.js"
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "concurrently": "^8.2.2"
+    }
+}
