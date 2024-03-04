@@ -1,39 +1,56 @@
-export function convertInvoiceData(invoice) {
+export function csvToJson(csvString) {
+  const lines = csvString.split("\n").filter((line) => line.trim() !== "");
+  const headers = lines[0].split(";").map((header) => mapHeader(header));
 
-    const transformedInvoice = {
-        salesDate: convertDateFormat(invoice['DATA SPRZEDAżY']),
-        issueDate: convertDateFormat(invoice['DATA WYSTAWIENIA']),
-        contractor: invoice['NAZWA KONTRAHENTA'],
-        accountNumber: formatAccountNumber(invoice['NUMER RACHUNKU']),
-        currency: invoice.WALUTA,
-        grossAmount: parseInt(invoice['WARTOŚĆ BRUTTO'], 10),
-        nettAmount: parseInt(invoice['WARTOŚĆ NETTO'], 10),
-    };
-    return transformedInvoice;
+  const jsonResult = lines.slice(1).map((row) => {
+    const values = row.split(";").map((value) => value.trim());
+    const invoice = headers.reduce((obj, header, index) => {
+      obj[header] = values[index];
+      return obj;
+    }, {});
+    return convertInvoiceData(invoice);
+  });
+
+  return jsonResult;
+}
+
+function mapHeader(header) {
+  const headerMappings = {
+    "NUMER FAKTURY": "invoiceNumber",
+    "DATA WYSTAWIENIA": "issueDate",
+    "DATA SPRZEDAżY": "salesDate",
+    "NAZWA KONTRAHENTA": "contractor",
+    WALUTA: "currency",
+    "WARTOść NETTO": "nettAmount",
+    "WARTOść BRUTTO": "grossAmount",
+    "WARTOść VAT": "vatTax",
+    "NUMER RACHUNKU": "accountNumber",
+  };
+  const trimmedHeader = header.trim();
+  const mappedHeader = headerMappings[trimmedHeader] || trimmedHeader;
+
+  return mappedHeader;
+}
+
+function convertInvoiceData(invoice) {
+  return {
+    invoiceNumber: invoice.invoiceNumber,
+    issueDate: convertDateFormat(invoice.issueDate),
+    salesDate: convertDateFormat(invoice.salesDate),
+    contractor: invoice.contractor,
+    currency: invoice.currency,
+    grossAmount: parseInt(invoice.grossAmount, 10),
+    nettAmount: parseInt(invoice.nettAmount, 10),
+    vatTax: parseInt(invoice.vatTax,10),
+    accountNumber: formatAccountNumber(invoice.accountNumber),
+  };
 }
 
 function convertDateFormat(dateStr) {
-    const [year, month, day] = dateStr.split('-');
-    return `${day}.${month}.${year}`;
+  const [year, month, day] = dateStr.split("-");
+  return `${day}.${month}.${year}`;
 }
 
 function formatAccountNumber(accountStr) {
-    // Removes anything that's not a digit
-    return accountStr.replace(/\D/g, '');
+  return accountStr.replace(/\D/g, "");
 }
-
-// Example usage:
-const originalInvoice = {
-    'NUMER FAKTURY': '0118/12/2023',
-    'DATA WYSTAWIENIA': '2023-12-11',
-    'DATA SPRZEDAżY': '2023-11-13',
-    'NAZWA KONTRAHENTA': 'Hongkong Aivee International Technology Co.',
-    WALUTA: 'USD',
-    'WARTOść NETTO': '400',
-    'WARTOść BRUTTO': '400',
-    'WARTOść VAT': '0',
-    'NUMER RACHUNKU': 'PL39 1140 1140 0000 3132 3300 1003'
-  };
-
-const convertedInvoice = convertInvoiceData(originalInvoice);
-console.log(convertedInvoice);
