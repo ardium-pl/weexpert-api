@@ -1,6 +1,7 @@
 import { reconcileTransactions } from "./banking-editor.js";
 import { csvToJson } from "./invoiceConverter.js";
 import { csvBankToJson } from "./bankingConverter.js";
+import { invoiceMatchFinder } from "./invoice-editor.js";
 
 
 
@@ -703,20 +704,15 @@ function testReconciliation() {
 
     console.log("Unmatched invoices:")
     console.log(filteredTransactions.remainingInvoices.length);
-
-    for(let i =0; i < filteredTransactions.remainingInvoices.length; i ++){
-        console.log(filteredTransactions.remainingInvoices[i]);
-    }
-
-    console.log("Unmatched bank transactions")
-    console.log(filteredTransactions.unmatchedTransactions.length);
-
-    // for(let i =0; i < filteredTransactions.unmatchedTransactions.length; i ++){
-    //     console.log(filteredTransactions.unmatchedTransactions[i]);
-    // }
-
-
-
+    
+    // for(let i =0; i < filteredTransactions.remainingInvoices.length; i ++){
+    //     console.log("index: " + i);
+    //     console.log(filteredTransactions.remainingInvoices[i]);}
+    
+    console.log("Invoice:");
+    console.log(filteredTransactions.remainingInvoices[14]);
+    console.log("Matches")
+    console.log(invoiceMatchFinder(filteredTransactions.remainingInvoices[14],filteredTransactions.unmatchedTransactions));
 }
 
 // Call the test function
