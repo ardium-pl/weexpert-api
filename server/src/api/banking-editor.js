@@ -1,7 +1,7 @@
 export function reconcileTransactions(bankTransactions, invoices) {
   let matchedTransactions = [];
   let unmatchedTransactions = [];
-  let remainingInvoices = [...invoices]; // Clone the invoices array to avoid modifying the original array directly
+  let remainingInvoices = [...invoices];
 
   bankTransactions.forEach((transaction) => {
     const matchResult = findMatchingInvoiceAndCheckResults(
@@ -24,7 +24,7 @@ export function reconcileTransactions(bankTransactions, invoices) {
     } else {
       unmatchedTransactions.push({
         ...transaction,
-        checkResults: matchResult.checkResults, // Details on why it didn't match
+        checkResults: matchResult.checkResults,
       });
     }
   });

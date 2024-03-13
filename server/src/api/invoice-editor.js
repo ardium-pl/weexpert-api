@@ -5,15 +5,17 @@ export function invoiceMatchFinder(invoice, bankTransactions){
         const matchResult = checkForSimilarInvoice(transaction,invoice);
         potencialMatches.push(matchResult);
     });
+    if(potencialMatches.length === 0) return [];
+
+    //sort matches by number of checks
     potencialMatches.sort((a, b) => b.checksPassed - a.checksPassed);
     
-    //shorten potencial matches to 5 or less positions
-    potencialMatches.length > 5 ? potencialMatches.slice(0,5): potencialMatches;
-    if(potencialMatches.length > 5){
-        return potencialMatches.slice(0,5);
-    }
+    //filter out matches that have noting in common
+    let filteredMatches = [];
+    const index = potencialMatches.findIndex(match => match.checksPassed === 0);
+    filteredMatches = index !== -1 ? potencialMatches.slice(0, index) : [...potencialMatches];
 
-    return potencialMatches;
+    return filteredMatches;
 }
 
 function checkForSimilarInvoice(transaction, invoice) {
@@ -37,14 +39,14 @@ function checkForSimilarInvoice(transaction, invoice) {
 }
 
 function performAdditionalChecks(transaction, invoice) {
-    const checkDetails = {
-      accountNumberMatch: transaction.accountNumber === invoice.accountNumber,
-      amountMatch: transaction.amount === invoice.grossAmount,
-      dateMatch: transaction.bookingDate === invoice.salesDate,
-      contractorMatch: contractorNameCheck(transaction.contractor,invoice.contractor)
-    };
-    const checksPassed = Object.values(checkDetails).filter(Boolean).length;
-    return { checksPassed, checkDetails };
+  const checkDetails = {
+    accountNumberMatch: transaction.accountNumber === invoice.accountNumber,
+    amountMatch: transaction.amount === invoice.grossAmount,
+    dateMatch: transaction.bookingDate === invoice.salesDate,
+    contractorMatch: contractorNameCheck(transaction.contractor, invoice.contractor),
+  };
+  const checksPassed = Object.values(checkDetails).filter(Boolean).length;
+  return { checksPassed, checkDetails };
 }
   
 function contractorNameCheck(transactionContractor, invoiceContractor) {
