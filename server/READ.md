@@ -24,40 +24,41 @@ This endpoint reconciles bank transactions with invoices.
 
 The request body should be a JSON object with the following structure:
 
-```json
+`
 {
   "bankObjects": [
     {
-      "transactionCode": "21",
-      "mBankCode": "770",
-      "clientName": "MIGRANT EXPERT SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
-      "amount": 430.5,
-      "currency": "PLN",
-      "transactionSide": "Uznania",
-      "bookingDate": "Mon Jul 01 2024 00:00:00 GMT+0200",
-      "accountNumber": "75114011400000234049001025",
-      "currencyDate": "Mon Jul 01 2024 00:00:00 GMT+0200",
-      "contractorAccountNumber": "45102011690000810208467419",
-      "contractor": "ULADZISLAU SHYTSIK UL. KOLEJOWA 47A M.126 01-210 WARSZAWA",
-      "transactionDescription": "ULADZISLAU SHYTSIK/CZERWIEC",
-      "fullTransactionDescription": "770 Przelew krajowy",
-      "transactionID": "z rach.: 45102011690000810208467419"
+      "transactionCode": "42",
+      "mBankCode": "555",
+      "clientName": "GLOBAL SOLUTIONS LIMITED",
+      "amount": 1234.56,
+      "currency": "USD",
+      "transactionSide": "Debit",
+      "bookingDate": "Tue Aug 01 2024 00:00:00 GMT+0200",
+      "accountNumber": "12345678901234567890123456",
+      "currencyDate": "Tue Aug 01 2024 00:00:00 GMT+0200",
+      "contractorAccountNumber": "65432109876543210987654321",
+      "contractor": "JOHN DOE 123 MAIN ST, ANYTOWN, USA",
+      "transactionDescription": "JOHN DOE/JULY",
+      "fullTransactionDescription": "555 Domestic transfer",
+      "transactionID": "from account: 65432109876543210987654321"
     }
   ],
   "invoiceObjects": [
     {
-      "invoiceNumber": "29/7/2024/MK0/FS/ME/WRO",
-      "issueDate": "03.07.2024",
-      "salesDate": "03.07.2024",
-      "contractor": "FINANCE EXPERT SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
-      "currency": "PLN",
-      "grossAmount": 340,
-      "nettAmount": 276.42,
-      "vatTax": 63.58,
-      "accountNumber": "47109023980000000147820334"
+      "invoiceNumber": "101/8/2024/INV/GS/NYC",
+      "issueDate": "05.08.2024",
+      "salesDate": "05.08.2024",
+      "contractor": "INTERNATIONAL FINANCE CORPORATION",
+      "currency": "USD",
+      "grossAmount": 1500,
+      "nettAmount": 1234.57,
+      "vatTax": 265.43,
+      "accountNumber": "98765432101234567890123456"
     }
   ]
 }
+`
 
 **bankObjects**: An array of bank transaction objects.  
 **invoiceObjects**: An array of invoice objects.
@@ -66,25 +67,30 @@ The request body should be a JSON object with the following structure:
 
 The API responds with a JSON object that includes:
 
-```json
+`
 {
   "matchedTransactions": [
     {
-      "transactionCode": "21",
-      "mBankCode": "770",
-      "clientName": "MIGRANT EXPERT SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
-      "amount": 430.5,
-      "currency": "PLN",
-      "transactionSide": "Uznania",
-      "bookingDate": "Mon Jul 01 2024",
-      "accountNumber": "75114011400000234049001025",
-      "currencyDate": "Mon Jul 01 2024",
-      "contractorAccountNumber": "45102011690000810208467419",
-      "contractor": "ULADZISLAU SHYTSIK UL. KOLEJOWA 47A M.126 01-210 WARSZAWA",
-      "transactionDescription": "ULADZISLAU SHYTSIK/CZERWIEC",
-      "matchDetails": "Invoice 29/7/2024/MK0/FS/ME/WRO"
+      "transactionCode": "42",
+      "mBankCode": "555",
+      "clientName": "GLOBAL SOLUTIONS LIMITED",
+      "amount": 1234.56,
+      "currency": "USD",
+      "transactionSide": "Debit",
+      "bookingDate": "Tue Aug 01 2024",
+      "accountNumber": "12345678901234567890123456",
+      "currencyDate": "Tue Aug 01 2024",
+      "contractorAccountNumber": "65432109876543210987654321",
+      "contractor": "JOHN DOE 123 MAIN ST, ANYTOWN, USA",
+      "transactionDescription": "JOHN DOE/JULY",
+      "matchDetails": "Invoice 101/8/2024/INV/GS/NYC"
     }
   ],
   "unmatchedTransactions": [],
   "remainingInvoices": []
 }
+`
+
+## Tracing the invoice to bank transaction 
+
+**matchDetails**: contains the invoice number that was matched with a given bank transaction 
