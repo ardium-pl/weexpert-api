@@ -14,12 +14,17 @@ The Mass Merge API provides an endpoint to reconcile bank transactions with invo
 
 ### Usage
 
-##API Endpoint
+## API Endpoint
+
 POST /mass-merge
+
 This endpoint reconciles bank transactions with invoices.
 
-#Request Payload
+## Request Payload
+
 The request body should be a JSON object with the following structure:
+
+```json
 {
   "bankObjects": [
     {
@@ -36,9 +41,8 @@ The request body should be a JSON object with the following structure:
       "contractor": "ULADZISLAU SHYTSIK UL. KOLEJOWA 47A M.126 01-210 WARSZAWA",
       "transactionDescription": "ULADZISLAU SHYTSIK/CZERWIEC",
       "fullTransactionDescription": "770 Przelew krajowy",
-      "trancationID": "z rach.: 45102011690000810208467419"
-    },
-    ...
+      "transactionID": "z rach.: 45102011690000810208467419"
+    }
   ],
   "invoiceObjects": [
     {
@@ -51,16 +55,18 @@ The request body should be a JSON object with the following structure:
       "nettAmount": 276.42,
       "vatTax": 63.58,
       "accountNumber": "47109023980000000147820334"
-    },
-    ...
+    }
   ]
 }
 
-* bankObjects: An array of bank transaction objects.
-* invoiceObjects: An array of invoice objects.
+**bankObjects**: An array of bank transaction objects.  
+**invoiceObjects**: An array of invoice objects.
 
-##Response
+## Response
+
 The API responds with a JSON object that includes:
+
+```json
 {
   "matchedTransactions": [
     {
@@ -79,36 +85,6 @@ The API responds with a JSON object that includes:
       "matchDetails": "Invoice 29/7/2024/MK0/FS/ME/WRO"
     }
   ],
-  "unmatchedTransactions": [
-    ...
-  ],
-  "remainingInvoices": [
-    ...
-  ]
+  "unmatchedTransactions": [],
+  "remainingInvoices": []
 }
-
-* matchedTransactions: Transactions that successfully matched with an invoice.
-* unmatchedTransactions: Transactions that could not be matched.
-* remainingInvoices: Invoices that did not have a corresponding transaction.
-
-#Example Usage
-import axios from 'axios';
-
-const requestData = {
-  bankObjects: bankJSON,  // Array of bank transactions
-  invoiceObjects: invoiceJSON  // Array of invoices
-};
-
-const url = 'http://localhost:8080/mass-merge';
-
-axios.post(url, requestData)
-  .then(response => {
-    console.log('Matched Transactions:', response.data.matchedTransactions);
-  })
-  .catch(error => {
-    if (error.response) {
-      console.error('Error:', error.response.data);
-    } else {
-      console.error('Error:', error.message);
-    }
-  });
