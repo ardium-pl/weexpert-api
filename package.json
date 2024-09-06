@@ -4,10 +4,15 @@
     "description": "",
     "author": "",
     "scripts": {
-        "start": "node server/src/index.js"
+        "start": "node server/src/index.js",
+        "build": "cd server && npm install",
+        "server": "cd server && nodemon"
     },
     "license": "MIT",
     "devDependencies": {
         "concurrently": "^8.2.2"
+    },
+    "dependencies": {
+        "axios": "^1.7.7"
     }
 }
