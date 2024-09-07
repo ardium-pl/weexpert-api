@@ -4,8 +4,7 @@ import { invoiceMatchFinder } from "../api/invoiceMatcher.js";
 
 export const weExpertRouter = express.Router();
 
-console.log('Initializing routes');
-weExpertRouter.get('/mass-merge', async (req, res, next) => {
+weExpertRouter.post('/', async (req, res, next) => {
   try {
     
     const body = req.body;
