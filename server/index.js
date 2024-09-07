@@ -14,6 +14,7 @@ app.use('/api', weExpertRouter);
 
 app.listen(port, () => {
   logger.info(`Serwer SOR uruchomiony na porcie ${port}`);
+  console.log(`Server running on port ${port}, NODE_ENV: ${process.env.NODE_ENV}`);
 });
 
 app._router.stack.forEach(function(r){
