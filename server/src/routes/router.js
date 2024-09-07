@@ -5,7 +5,7 @@ import { invoiceMatchFinder } from "../api/invoiceMatcher.js";
 export const weExpertRouter = express.Router();
 
 console.log('Initializing routes');
-weExpertRouter.post('/mass-merge', async (req, res, next) => {
+weExpertRouter.get('/mass-merge', async (req, res, next) => {
   console.log('The route got a hit');
   try {
     const body = req.body;
@@ -24,7 +24,7 @@ weExpertRouter.post('/mass-merge', async (req, res, next) => {
   }
 });
 
-weExpertRouter.post('/invoice-finder', async (req, res, next) => {
+weExpertRouter.get('/invoice-finder', async (req, res, next) => {
   try {
     const body = req.body;
     const bankObjects = body.bankObjects;
