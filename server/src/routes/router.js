@@ -24,7 +24,7 @@ weExpertRouter.get('/mass-merge', async (req, res, next) => {
   }
 });
 
-weExpertRouter.get('/invoice-finder', async (req, res, next) => {
+weExpertRouter.post('/invoice-finder', async (req, res, next) => {
   try {
     const body = req.body;
     const bankObjects = body.bankObjects;
