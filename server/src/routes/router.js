@@ -7,7 +7,12 @@ export const weExpertRouter = express.Router();
 console.log('Initializing routes');
 weExpertRouter.get('/mass-merge', async (req, res, next) => {
   try {
+    
     const body = req.body;
+    
+    console.log('body');
+    console.log(body)
+    
     const bankObjects = body.bankObjects;
     const invoiceObjects = body.invoiceObjects;
 
@@ -30,6 +35,10 @@ weExpertRouter.get('/mass-merge', async (req, res, next) => {
 weExpertRouter.get('/invoice-finder', async (req, res, next) => {
   try {
     const body = req.body;
+
+    console.log('body');
+    console.log(body)
+
     const bankObjects = body.bankObjects;
     const invoiceObject = body.invoiceObject;
 
