@@ -152,7 +152,7 @@ curl -X POST https://weexpert.ardium.pl/mass-merge \
   ]
 }'
 ```
-##Invoice finder
+## Invoice finder
 
 The invoice-finder endpoint allows you to retrieve the most probable transactions for a specific invoice.
 
