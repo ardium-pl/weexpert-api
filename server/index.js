@@ -10,7 +10,7 @@ const port = process.env.PORT || 8080;
 app.use(express.json());
 app.use(cors());
 
-app.use('/api', weExpertRouter);
+app.use('/api/weex', weExpertRouter);
 
 app.listen(port, () => {
   logger.info(`Serwer SOR uruchomiony na porcie ${port}`);
