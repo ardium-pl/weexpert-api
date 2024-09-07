@@ -6,13 +6,16 @@ export const weExpertRouter = express.Router();
 
 console.log('Initializing routes');
 weExpertRouter.get('/mass-merge', async (req, res, next) => {
-  console.log('The route got a hit');
   try {
     const body = req.body;
     const bankObjects = body.bankObjects;
     const invoiceObjects = body.invoiceObjects;
 
     if (!bankObjects || !invoiceObjects) {
+      console.log('bankObjects');
+      console.log(bankObjects);
+      console.log('invoiceObjects');
+      console.log(invoiceObjects);
       return res.status(400).json({ message: 'Wrong input data' });
     }
 
@@ -25,14 +28,17 @@ weExpertRouter.get('/mass-merge', async (req, res, next) => {
 });
 
 weExpertRouter.get('/invoice-finder', async (req, res, next) => {
-  console.log('The route got a hit');
-
   try {
     const body = req.body;
     const bankObjects = body.bankObjects;
     const invoiceObject = body.invoiceObject;
 
     if (!bankObjects || !invoiceObject) {
+      console.log('bankObjects');
+      console.log(bankObjects);
+      console.log('invoiceObject');
+      console.log(invoiceObject);
+
       return res.status(400).json({ message: 'Wrong input data' });
     }
     const result = invoiceMatchFinder(invoiceObject, bankObjects);
