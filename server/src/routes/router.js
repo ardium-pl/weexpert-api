@@ -7,6 +7,7 @@ export const weExpertRouter = express.Router();
 
 
 weExpertRouter.post('/mass-merge', async (req, res, next) => {
+  console.log('The route got a hit');
   try {
     const body = req.body;
     const bankObjects = body.bankObjects;
